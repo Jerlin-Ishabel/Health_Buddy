@@ -1,5 +1,4 @@
 from deep_translator import GoogleTranslator
-from googletrans import Translator
 
 # 🔄 Initialize translator once
 translator = Translator()
