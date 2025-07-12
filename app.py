@@ -63,7 +63,7 @@ gender = st.selectbox("Gender", ["Male", "Female", "Other"])
 st.markdown("### 🤒 How are you feeling today?")
 user_input = ""
 
-# Helper function to get diagnosis from Gemini
+# 🧠 Diagnosis Function
 def run_diagnosis(name, age, gender, user_input, lang):
     try:
         st.info("🧠 AI is analyzing your symptoms...")
@@ -79,7 +79,6 @@ def run_diagnosis(name, age, gender, user_input, lang):
         st.markdown("### ✅ AI Suggests:")
         st.success(f"💬 **({lang})**:\n\n{final_response}")
 
-        # Save to session
         st.session_state["name"] = name
         st.session_state["age"] = age
         st.session_state["gender"] = gender
@@ -88,7 +87,6 @@ def run_diagnosis(name, age, gender, user_input, lang):
         st.session_state["response_lang"] = final_response
         st.session_state["lang"] = lang
 
-        # Add motivational quote
         st.session_state["quote"] = random.choice([
             "🩺 Health is not valued till sickness comes. – Thomas Fuller",
             "🍏 Take care of your body. It’s the only place you have to live. – Jim Rohn",

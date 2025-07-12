@@ -2,23 +2,26 @@ import os
 import requests
 from dotenv import load_dotenv
 
-# Load API key from .env
+# 🔐 Load API key from .env
 load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not API_KEY:
     raise ValueError("❌ GEMINI_API_KEY is not set in .env file")
 
-API_URL ="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+# 🌐 Gemini API URL and headers
+API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 HEADERS = {
     "Content-Type": "application/json",
     "x-goog-api-key": API_KEY
 }
 
+# 🧠 Health Advice Function
 def get_health_advice(symptoms: str) -> str:
     if not symptoms.strip():
         return "❗ Please describe your symptoms."
 
+    # 🤖 Prompt to Gemini
     prompt = f"""
     You are HealthBuddy, a kind and friendly virtual health assistant.
     A person reports: \"{symptoms.strip()}\"
@@ -48,7 +51,7 @@ def get_health_advice(symptoms: str) -> str:
                 if parts and isinstance(parts, list):
                     return parts[0].get("text", "").strip()
                 else:
-                    return "⚠️ Gemini response received but empty."
+                    return "⚠️ Gemini responded but no usable content."
             else:
                 return "⚠️ No candidates found in Gemini response."
 
@@ -57,9 +60,9 @@ def get_health_advice(symptoms: str) -> str:
         elif response.status_code == 403:
             return "🚫 Forbidden: Your API key lacks permission."
         elif response.status_code == 429:
-            return "⏳ Rate limit exceeded. Try later."
+            return "⏳ Rate limit exceeded. Try again later."
         elif response.status_code == 400:
-            return "❌ API key expired or bad request."
+            return "❌ API key expired or request malformed."
         else:
             return f"❌ Error {response.status_code}: {response.text}"
 

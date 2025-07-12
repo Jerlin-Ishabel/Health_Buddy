@@ -6,4 +6,4 @@ SpeechRecognition
 gTTS
 reportlab
 pygame
-pyaudio ; platform_system == "Windows"
+pyaudio; platform_system == "Windows"
