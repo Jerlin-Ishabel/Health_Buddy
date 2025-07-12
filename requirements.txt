@@ -1,0 +1,10 @@
+streamlit
+requests
+python-dotenv
+googletrans==4.0.0-rc1
+SpeechRecognition
+gTTS
+playsound
+reportlab
+pyaudio ; platform_system == "Windows"
+pygame
