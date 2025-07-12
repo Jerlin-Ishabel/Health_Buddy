@@ -153,7 +153,23 @@ with st.expander("💡 See Example Symptoms"):
 # 🔊 Speak Diagnosis
 # -------------------------------
 if "response_lang" in st.session_state and st.button("🔊 Speak Out the Diagnosis"):
-    speak_answer(st.session_state["response_lang"], st.session_state["lang"])
+    audio_data, result = speak_answer(st.session_state["response_lang"], st.session_state["lang"])
+    if audio_data:
+        st.audio(audio_data, format='audio/mp3')
+
+        # 📥 Download as .mp3
+        with open(result, "rb") as f:
+            b64 = base64.b64encode(f.read()).decode()
+            href = f'''
+                <a href="data:audio/mp3;base64,{b64}" download="HealthBuddy_Diagnosis.mp3">
+                    📥 Download Diagnosis Audio
+                </a>
+            '''
+            st.markdown(href, unsafe_allow_html=True)
+    else:
+        st.error(result)
+
+
 
 # -------------------------------
 # 📥 Download PDF (English Only)
