@@ -1,5 +1,6 @@
 from googletrans import Translator
 
+# 🔄 Initialize translator once
 translator = Translator()
 
 # 🔁 English → Tamil

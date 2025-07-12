@@ -52,12 +52,12 @@ def generate_pdf(name, age, gender, symptoms, diagnosis, quote="Stay healthy!"):
 
     for point in split_into_points(diagnosis):
         for line in wrap_text(point, 85):
-            c.drawString(60, y, line)
-            y -= 15
             if y < 80:
                 c.showPage()
                 y = height - 50
                 c.setFont(body_font, 11)
+            c.drawString(60, y, line)
+            y -= 15
         y -= 5
 
     # 💬 Health Quote
@@ -66,7 +66,6 @@ def generate_pdf(name, age, gender, symptoms, diagnosis, quote="Stay healthy!"):
     c.drawString(50, y, "💬 HealthBuddy Says:")
     y -= 20
     c.setFont("Helvetica-Oblique", 11)
-
     for line in wrap_text(f"“{quote}”", 85):
         c.drawString(60, y, line)
         y -= 15

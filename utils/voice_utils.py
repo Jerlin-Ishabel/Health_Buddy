@@ -34,15 +34,11 @@ def speak_answer(text, language="English"):
         clean_text = clean_for_speech(text)
         lang_code = "ta" if language == "Tamil" else "en"
 
-        # 📁 Ensure output folder exists
         os.makedirs("output", exist_ok=True)
-
-        # 💾 Save audio file
         filename = f"output/speak_{uuid.uuid4().hex}.mp3"
         tts = gTTS(text=clean_text, lang=lang_code)
         tts.save(filename)
 
-        # 🔉 Play with pygame
         pygame.mixer.init()
         pygame.mixer.music.load(filename)
         pygame.mixer.music.play()
@@ -59,7 +55,7 @@ def speak_answer(text, language="English"):
             print("🔁 Retrying with English TTS...")
             speak_answer(text, language="English")
 
-# 🧼 Clean AI diagnosis for speaking
+# 🧼 Clean text for speaking (removes Markdown/symbols)
 def clean_for_speech(text):
     text = re.sub(r"\*\*(.*?)\*\*", r"\1", text)   # remove bold
     text = re.sub(r"__([^_]+)__", r"\1", text)     # remove underline
