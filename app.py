@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+import os
 import random
 
 from utils.voice_utils import get_voice_input, speak_answer
@@ -141,11 +142,16 @@ with st.expander("💡 See Example Symptoms"):
 # -------------------------------
 # 🔊 Speak Diagnosis
 # -------------------------------
+# 🔊 Speak Diagnosis
 if "response_lang" in st.session_state and st.button("🔊 Speak Out the Diagnosis"):
-    audio_data, result = speak_answer(st.session_state["response_lang"], st.session_state["lang"])
-    if audio_data:
+    audio_data, result = speak_answer(
+        st.session_state["response_lang"],
+        st.session_state["lang"]
+    )
+    
+    if audio_data and os.path.exists(audio_data):
         st.audio(audio_data, format='audio/mp3')
-        with open(result, "rb") as f:
+        with open(audio_data, "rb") as f:
             b64 = base64.b64encode(f.read()).decode()
             href = f'''
                 <a href="data:audio/mp3;base64,{b64}" download="HealthBuddy_Diagnosis.mp3">
@@ -154,7 +160,8 @@ if "response_lang" in st.session_state and st.button("🔊 Speak Out the Diagnos
             '''
             st.markdown(href, unsafe_allow_html=True)
     else:
-        st.error(result)
+        st.error(result or "❌ Audio file not found.")
+
 
 # -------------------------------
 # 📥 Download PDF (English Only)
