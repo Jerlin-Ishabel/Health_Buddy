@@ -8,25 +8,15 @@ from utils.pdf_generator import generate_pdf
 from gemini_api import get_health_advice  # Gemini API handler
 
 # -------------------------------
-# 🎨 Page Setup and Styling
+# 🎨 Page Setup
 # -------------------------------
 st.set_page_config(page_title="HealthBuddy - Symptom Checker", page_icon="🩺", layout="centered")
 
 st.markdown("""
     <style>
-    body {
-        background-color: #121212;
-        color: #F5F5F5;
-    }
-    .stButton>button {
-        background-color: #0d6efd;
-        color: white;
-        border-radius: 8px;
-    }
-    .stTextInput>div>input {
-        background-color: #2b2b2b;
-        color: white;
-    }
+    body {background-color: #121212; color: #F5F5F5;}
+    .stButton>button {background-color: #0d6efd; color: white; border-radius: 8px;}
+    .stTextInput>div>input {background-color: #2b2b2b; color: white;}
     footer {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
@@ -43,14 +33,14 @@ st.title("🩺 HealthBuddy")
 st.markdown("#### Your Friendly AI Symptom Checker")
 
 # -------------------------------
-# ⬅️ Sidebar for Language & Input Method
+# ⬅️ Sidebar
 # -------------------------------
 with st.sidebar:
     lang = st.selectbox("🌍 Select Language", ["English", "Tamil"])
     input_method = st.radio("🎙 Choose Input Method", ["📝 Type", "🎤 Speak"])
 
 # -------------------------------
-# 👤 User Details
+# 👤 User Info
 # -------------------------------
 st.markdown("### 👤 Your Details")
 name = st.text_input("Name")
@@ -58,12 +48,11 @@ age = st.text_input("Age")
 gender = st.selectbox("Gender", ["Male", "Female", "Other"])
 
 # -------------------------------
-# 🤒 Symptom Input Area
+# 🤒 Symptom Input
 # -------------------------------
 st.markdown("### 🤒 How are you feeling today?")
 user_input = ""
 
-# 🧠 Diagnosis Function
 def run_diagnosis(name, age, gender, user_input, lang):
     try:
         st.info("🧠 AI is analyzing your symptoms...")
@@ -156,8 +145,6 @@ if "response_lang" in st.session_state and st.button("🔊 Speak Out the Diagnos
     audio_data, result = speak_answer(st.session_state["response_lang"], st.session_state["lang"])
     if audio_data:
         st.audio(audio_data, format='audio/mp3')
-
-        # 📥 Download as .mp3
         with open(result, "rb") as f:
             b64 = base64.b64encode(f.read()).decode()
             href = f'''
@@ -168,8 +155,6 @@ if "response_lang" in st.session_state and st.button("🔊 Speak Out the Diagnos
             st.markdown(href, unsafe_allow_html=True)
     else:
         st.error(result)
-
-
 
 # -------------------------------
 # 📥 Download PDF (English Only)
