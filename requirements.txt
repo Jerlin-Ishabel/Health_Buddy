@@ -2,8 +2,8 @@ streamlit
 requests
 python-dotenv
 deep-translator
-SpeechRecognition
 gTTS
-reportlab
 pygame
+reportlab
+SpeechRecognition
 pyaudio ; platform_system == "Windows"
