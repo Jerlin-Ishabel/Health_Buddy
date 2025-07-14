@@ -102,7 +102,9 @@ if input_method == "📝 Type":
 elif input_method == "🎤 Speak":
     if st.button("🎙 Start Voice Input"):
         spoken_input = get_voice_input(lang)
-        if spoken_input.strip() and not spoken_input.startswith("❗"):
+        if spoken_input.startswith("❌ Voice input not supported"):
+            st.warning("🚫 Voice input is not supported on this platform (e.g., Streamlit Cloud). Try typing instead.")
+        elif spoken_input.strip() and not spoken_input.startswith("❗"):
             st.success(f"🎧 You said: {spoken_input}")
             if not name.strip() or not age.strip():
                 st.warning("⚠️ Please fill name and age.")
@@ -110,6 +112,7 @@ elif input_method == "🎤 Speak":
                 run_diagnosis(name, age, gender, spoken_input, lang)
         else:
             st.warning(spoken_input or "❗ Voice input failed.")
+
 
 # -------------------------------
 # 💡 Example Symptoms
